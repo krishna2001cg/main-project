@@ -1,0 +1,76 @@
+{% include 'employeeheader.html' %}
+
+<div style="background:url('/static/images/lap3.jpg'); height: 300px; width: 100%; background-size: contain;"></div>
+
+<center>
+    <form>
+        <h1 style="padding-top: 50px">View Customers</h1>
+
+        <!-- Live Search Bar -->
+        <input type="text" id="searchInput" onkeyup="liveSearch()" placeholder="Search for customers..." style="margin-bottom: 20px; padding: 10px; width: 300px;">
+
+        <table class="table" style="width: 100%; font-size: 15px;">
+            <tr>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>HouseName</th>
+                <th>Place</th>
+                <th>Pincode</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Manage Accounts</th>
+                <th>Chat</th>
+            </tr>
+
+            {% for row in data['cust'] %}
+            <tr>
+                <td>{{ row['firstname'] }}</td>
+                <td>{{ row['lastname'] }}</td>
+                <td>{{ row['housename'] }}</td>
+                <td>{{ row['place'] }}</td>
+                <td>{{ row['pincode'] }}</td>
+                <td>{{ row['phone'] }}</td>
+                <td>{{ row['email'] }}</td>
+                <td><a href="employeemanageaccounts?id={{ row['customer_id'] }}">Manage Accounts</a></td>
+                <td><a href="employeechat?cid={{ row['cust_log_id'] }}&fname={{ row['firstname'] }}&lname={{ row['lastname'] }}" class="btn btn-primary">Chat</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</center>
+
+<script>
+    // Live Search Function
+    function liveSearch() {
+        // Get the input value and convert to lowercase
+        var input = document.getElementById('searchInput');
+        var filter = input.value.toLowerCase();
+
+        // Get the table and all rows
+        var table = document.querySelector('.table');
+        var rows = table.getElementsByTagName('tr');
+
+        // Loop through all table rows and hide those that don't match the search query
+        for (var i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
+            var cells = rows[i].getElementsByTagName('td');
+            var match = false;
+
+            // Loop through all cells in the row and check if any match the search input
+            for (var j = 0; j < cells.length; j++) {
+                if (cells[j].innerText.toLowerCase().includes(filter)) {
+                    match = true;
+                    break; // Stop once a match is found
+                }
+            }
+
+            // Show or hide the row based on the match
+            if (match) {
+                rows[i].style.display = '';
+            } else {
+                rows[i].style.display = 'none';
+            }
+        }
+    }
+</script>
+
+{% include 'footer.html' %}
