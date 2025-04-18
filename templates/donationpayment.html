@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Payment</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f7f7f7;
+            margin: 0;
+        }
+        
+        .payment-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 380px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .payment-container:hover {
+            transform: translateY(-10px);
+        }
+        
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .card-preview {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-number,
+        .card-holder,
+        .card-expiry {
+            margin: 5px 0;
+            font-size: 18px;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        label {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+            text-align: left;
+        }
+        
+        input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            border-color: #764ba2;
+        }
+        
+        button {
+            padding: 12px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #218838;
+        }
+        
+        .alert {
+            opacity: 0;
+            color: red;
+            font-size: 12px;
+            margin-top: -10px;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        /* Responsive design for smaller screens */
+        @media (max-width: 480px) {
+            .payment-container {
+                width: 90%;
+                padding: 20px;
+            }
+        
+            .card-preview {
+                font-size: 14px;
+            }
+        
+            h2 {
+                font-size: 22px;
+            }
+        
+            input {
+                font-size: 14px;
+            }
+        
+            button {
+                font-size: 14px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <h2>Card Payment</h2>
+        <div class="card-preview">
+            <div class="card-number" id="preview-card-number">1234 5678 9012 3456</div>
+            <div class="card-holder" id="preview-card-holder">Cardholder Name</div>
+            <div class="card-expiry" id="preview-card-expiry">MM/YY</div>
+        </div>
+        <form id="payment-form" method="post">
+            <label for="amount">Amount</label>
+            <input type="number" id="amount" name="amount" placeholder="Enter amount" required>
+
+            <label for="username">User Name</label>
+            <input type="text" id="username" placeholder="Enter your name" required>
+
+            <label for="card-number">Card Number</label>
+            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required maxlength="16" pattern="\d{16}">
+
+            <div class="alert" id="alert-2">Invalid card number</div>
+
+            <label for="expiry">Expiry Date</label>
+            <input type="month" id="expiry" required min="2026-01">
+
+
+            <label for="cvv">CVV</label>
+            <input type="password" id="cvv" placeholder="123" required maxlength="3" pattern="\d{3}">
+
+            <div class="alert" id="alert-3">Invalid CVV</div>
+            <input type="submit" name="submitt" value="Pay Now" id="submitBtn" >
+        </form>
+    </div>
+</body>
+</html>
