@@ -1,0 +1,111 @@
+{% include 'employeeheader.html' %}
+	<center>
+		<div class="fullwidthbanner" id="home">
+            <div class="tp-banner">
+                <ul>
+                    <!-- SLIDE 1 -->
+                    <li data-transition="fade" data-slotamount="7" data-masterspeed="1500">
+                        <!-- MAIN IMAGE -->
+                        <img src="/static/images/l2.jpg" alt="desk" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+                        <!-- LAYERS -->
+                        <!-- LAYER NR. 1 -->
+                        <div class="tp-caption slider-title" data-x="center" data-y="center"  data-voffset="-30" data-speed="500" data-start="1200" data-easing="Power4.easeInOut">
+<form method="post">
+	{% if data['acc'] %}
+	<h1 style="padding-top: 150px">Update Account</h1>
+	<table class="table" style="width: 600px;font-size:30px">
+		<tr>
+			<th>Account Number</th>
+			<td><input type="text" name="accountnumber" value="{{data['acc'][0]['account_number']}}" class="form-control"></td>
+		</tr>
+		<tr>
+			<th>Balance</th>
+			<td><input type="text" name="balance" value="{{data['acc'][0]['balance']}}" class="form-control"></td>
+		</tr>
+		<tr>
+			<td align="center" colspan="2"><input type="submit" name="update" value="UPDATE" class="btn btn-primary"></td>
+		</tr>
+	</table>
+	{% else %}
+	<h1 style="padding-top: 150px">Manage  Accounts</h1>
+	<table class="table" style="width: 500px;font-size:15px">
+		<tr>
+			<tr>
+				<th>Account Number</th>
+				<td>
+					<input type="text" name="accountnumber" class="form-control" required 
+						   pattern="^\d{10}$" 
+						   maxlength="10"
+						   title="Account number must be 10 digits long.">
+				</td>
+			</tr>
+			
+		
+		
+		<tr>
+			<th>Balance</th>
+			<td>
+				<input type="text" name="balance" class="form-control" required 
+					   pattern="^\d+$" 
+					   title="Please enter a valid balance (numbers only).">
+			</td>
+		</tr>
+		
+		<tr>
+			<td align="center" colspan="2"><input type="submit" name="manage" value="MANAGE" class="btn btn-primary"></td>
+		</tr>
+	</table>
+	{% endif %}
+</form>
+</center>
+                        </div> <!-- /tp-caption -->
+                        <!-- LAYER NR. 2 -->
+                       
+                    </li>
+                    <!-- SLIDE 2 -->
+                    
+                </ul>
+            </div>
+        </div><!--full width banner-->
+ <section id="about" class="section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12  text-center">
+                        <div class="section-title">
+                            <h1> <span class="alo">View Accounts</span></h1> 
+                            <span class="border-line"></span>
+                           
+<!-- <h1>View Bank Details</h1> -->
+<table class="table" style="width: 1200px;font-size:15px">
+	<tr>
+		<th>BankName</th>
+		<th>Place</th>
+		<th>Account Number</th>
+		<th>Balance</th>
+		<th>datetime</th>
+		<th>Status</th>
+		<th>Delete</th>
+		<th>Update</th>
+	</tr>
+	{% for row in data['accounts'] %}
+	<tr>
+		<td>{{row['bankname']}}</td>
+		<td>{{row['place']}}</td>
+		<td>{{row['account_number']}}</td>
+		<td>{{row['balance']}}</td>
+		<td>{{row['datetime']}}</td>
+		<td>{{row['status']}}</td>
+		<td><a href="?action=delete&aid={{row['account_id']}}&id={{data['id']}}" class="btn btn-info">DELETE</a></td>
+		<td><a href="?action=update&aid={{row['account_id']}}&id={{data['id']}}" class="btn btn-info">UPDATE</a></td>
+	</tr>
+	{% endfor %}
+</table>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div><!--container-->      
+        </section><!--about section end-->
+{% include 'footer.html' %}
