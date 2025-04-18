@@ -1,0 +1,124 @@
+{% include 'customerheader.html' %}
+<style>
+    #hero {
+        background-image: url(/static/images/a41.jpg);
+        background-size: cover;
+        background-position: center;
+        height: 350px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        font-family: 'Arial', sans-serif;
+        box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
+    }
+
+    /* Styling for the search container */
+    .search-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+        gap: 20px;
+    }
+
+    .search-container input {
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 250px;
+    }
+
+    /* Table Styling */
+    .table {
+        width: 100%;
+        font-size: 15px;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+    .table th, .table td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+    }
+
+
+</style>
+
+<section id="hero"></section>
+
+<!-- Search Bars -->
+<div class="search-container">
+    <input type="text" id="bankSearch" placeholder="Search by Bank Name" onkeyup="filterTable()">
+    <input type="text" id="loanSearch" placeholder="Search by Loan Name" onkeyup="filterTable()">
+</div>
+
+<!-- Table Display -->
+<table class="table">
+    <form method="post">
+        <thead>
+            <tr>
+                <th>Bank Name</th>
+                <th>Place</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Loan Name</th>
+                <th>Details</th>
+                <th>Interest Rate</th>
+                <th>Max Amount</th>
+                <th>Monthly Emi</th>
+				<th>Loan Request</th>
+            </tr>
+        </thead>
+        <tbody id="loanTableBody">
+            {% for row in data['loans'] %}
+            <tr>
+                <td>{{row['bankname']}}</td>
+                <td>{{row['place']}}</td>
+                <td>{{row['phone']}}</td>
+                <td>{{row['email']}}</td>
+                <td>{{row['loan_name']}}</td>
+                <td>{{row['details']}}</td>
+                <td>{{row['interest_rate']}}</td>
+                <td>{{row['max_amount']}}</td>
+                <td>{{row['emi']}}</td>
+                <td><a href="?action=request&lnid={{row['loan_id']}}">Request for loan</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </form>
+</table>
+
+{% include 'footer.html' %}
+
+<script>
+    // Function to filter the table based on search inputs
+    function filterTable() {
+        let bankSearch = document.getElementById("bankSearch").value.toLowerCase();
+        let loanSearch = document.getElementById("loanSearch").value.toLowerCase();
+        let table = document.getElementById("loanTableBody");
+        let rows = table.getElementsByTagName("tr");
+
+        for (let i = 0; i < rows.length; i++) {
+            let bankCell = rows[i].getElementsByTagName("td")[0]; // Bank Name column
+            let loanCell = rows[i].getElementsByTagName("td")[4]; // Loan Name column
+
+            if (bankCell && loanCell) {
+                let bankText = bankCell.textContent || bankCell.innerText;
+                let loanText = loanCell.textContent || loanCell.innerText;
+
+                if (bankText.toLowerCase().indexOf(bankSearch) > -1 && loanText.toLowerCase().indexOf(loanSearch) > -1) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
