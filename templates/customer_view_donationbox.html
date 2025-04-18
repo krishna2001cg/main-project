@@ -1,0 +1,168 @@
+{% include 'customerheader.html' %}
+
+<style>
+
+  
+  /* Grid Layout for Donation Cards */
+  .donation-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    width: 100%;
+    max-width: 300px; /* Adjust this value to change card size */
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  /* Flex container for three cards per row */
+  .donation-cards-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .donation-header {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .donation-header h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .donation-content {
+    padding: 20px;
+  }
+  
+  .donation-description {
+    margin-bottom: 20px;
+    color: #555;
+    line-height: 1.6;
+  }
+  
+  .donation-options {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .donation-amount {
+    background-color: #f5f5f5;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    padding: 10px 0;
+    width: 23%;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  
+  .donation-amount:hover, .donation-amount.active {
+    border-color: #2575fc;
+    background-color: rgba(37, 117, 252, 0.1);
+  }
+  
+  .custom-amount {
+    margin-bottom: 20px;
+  }
+  
+  .custom-amount input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  .donation-button {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 0;
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .donation-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(37, 117, 252, 0.3);
+  }
+  
+
+
+  #hero {
+    background-image: url(/static/images/a41.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    font-family: 'Arial', sans-serif;
+    box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
+  }
+</style>
+
+<section id="hero"></section>
+
+<center>
+  <h1 style="padding-top: 100px">View Donation Options</h1>
+</center>
+
+<div class="donation-cards-container">
+    {% for i in data['view'] %}
+      <form action="" method="POST">
+        <div class="donation-container">
+          <div class="donation-header">
+            <h1>{{i['donation_title']}}</h1>
+          </div>
+          
+          <div class="donation-content">
+            <div class="donation-description">
+              {{i['donation_details']}}
+            </div>
+            
+            
+            
+              <center>
+              <a href="donationpayment?donation_id={{i['donation_id']}}" class="donation-button">Donate Now</a>
+            </center>
+        
+
+
+             </div>
+          
+          <div class="donation-footer">
+            All donations are tax-deductible. Tax ID: {{i['donation_date']}}
+          </div>
+        </div>
+      </form>
+    {% endfor %}
+  </div>
+  <script>
+    // Function to set the selected amount (numeric) into the custom input field based on donation_id
+    function setAmount(donation_id, amount) {
+      // Update the custom amount input field for the specific donation, adding just the numeric value
+      var customAmountField = document.getElementById('customAmount_' + donation_id);
+      customAmountField.value = amount;
+
+      // Update the hidden donation_id field for this specific donation card
+      var donationIdField = document.getElementById('donation_id_' + donation_id);
+      donationIdField.value = donation_id;
+    }
+  </script>
+{% include 'footer.html' %}
