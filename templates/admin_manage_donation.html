@@ -1,0 +1,211 @@
+{% include 'adminheader.html' %}
+<style>
+	
+  
+	/* Hero Section */
+	#hero {
+	  background-image: url(/static/images/a41.jpg);
+	  background-size: cover;
+	  background-position: center;
+	  height: 200px;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  text-align: center;
+	  color: white;
+	  font-family: 'Arial', sans-serif;
+	  box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
+	}
+  
+	/* Form Styles */
+	form {
+	  width: 100%;
+
+	  background-color: white;
+	  padding: 20px;
+	  border-radius: 8px;
+	  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	}
+  
+	form h1 {
+	  font-size: 32px;
+	  margin-bottom: 20px;
+	  color: #333;
+	}
+  
+	table {
+	  width: 1500px;
+	}
+  
+	th, td {
+	  padding: 15px;
+	  text-align: left;
+	  font-size: 16px;
+	  border-bottom: 1px solid #ddd;
+	}
+  
+	th {
+	  background-color: #007bff;
+	  color: white;
+	  font-weight: bold;
+	}
+  
+	td {
+	  background-color: #f9f9f9;
+	}
+  
+	/* Form Elements */
+	input[type="text"], textarea {
+	  width: 100%;
+	  padding: 12px;
+	  font-size: 16px;
+	  border: 1px solid #ccc;
+	  border-radius: 4px;
+	  box-sizing: border-box;
+	  margin-top: 10px;
+	  margin-bottom: 20px;
+	  background-color: #f4f7fc;
+	}
+  
+	input[type="text"]:focus, textarea:focus {
+	  outline: none;
+	  border-color: #007bff;
+	}
+  
+	/* Buttons */
+	.btn {
+	  padding: 10px 20px;
+	  font-size: 16px;
+	  text-decoration: none;
+	  color: white;
+	  background-color: #007bff;
+	  border-radius: 4px;
+	  cursor: pointer;
+	  transition: background-color 0.3s;
+	  text-align: center;
+	}
+  
+	.btn:hover {
+	  background-color: #0056b3;
+	}
+  
+	.btn-info {
+	  background-color: #28a745;
+	}
+  
+	.btn-info:hover {
+	  background-color: #218838;
+	}
+  
+	/* Table Styles */
+	table {
+	  width: 100%;
+	  border-collapse: collapse;
+	}
+  
+	table td, table th {
+	  text-align: center;
+	  padding: 15px;
+	}
+  
+	table tr:nth-child(even) {
+	  background-color: #f2f2f2;
+	}
+  
+	table tr:hover {
+	  background-color: #f1f1f1;
+	}
+  
+	table a {
+	  color: white;
+	  text-decoration: none;
+	}
+  
+  </style>
+  
+<section id="hero"></section>
+<center>
+<form method="post">
+	{% if data['banks'] %}
+	<h1 style="padding-top: 100px">Update Donation</h1>
+	<table >
+		<tr>
+			<th>Donation Title</th>
+			<td><input type="text" name="title" value="{{data['banks'][0]['donation_title']}}" class="form-control" required></td>
+		</tr>
+		<tr>
+			<th>Donation Details</th>
+			<td><textarea maxlength="219" title="219 alphanumeric characters and spaces are allowed. " name="details" class="form-control" required>{{data['banks'][0]['donation_details']}}</textarea></td>
+		</tr>
+      
+
+		
+		
+		<tr>
+			<td align="center" colspan="2"><input type="submit" name="update" value="UPDATE" class="btn btn-primary"></td>
+		</tr>
+	</table>
+
+	{% else %}
+
+	<h1 style="padding-top: 100px">Add Donation</h1>
+	<table>
+		<tr>
+			<th>Donation Title </th>
+			<td><input type="text" name="title" class="form-control" required></td>
+		</tr>
+		<tr>
+			<th>Donation Details </th>
+			<td><textarea name="details" class="form-control" maxlength="219" title="219 alphanumeric characters and spaces are allowed. " rows="4" cols="50" required></textarea></td>
+		</tr>
+       
+
+      
+       
+
+		
+		
+		
+		<tr>
+			<td align="center" colspan="2"><input type="submit" name="submit" value="SUBMIT" class="btn btn-primary"></td>
+		</tr>
+	</table>
+	{% endif %}
+</form>
+</center>
+<table >
+	<tr>
+		
+		<th>Donation Title</th>
+		<th>Donation Details</th>
+		<th>Donation Date</th>
+		<th>Donation Status</th>
+		<th>Delete</th>
+		<th>Update</th>
+        <th>View Doners</th>
+		
+	</tr>
+	{% for row in data['view'] %}
+	<tr>
+		<td>{{row['donation_title']}}</td>
+		<td>{{row['donation_details']}}</td>
+		<td>{{row['donation_date']}}</td>
+        
+		{% if row['donation_status']=='start' %}
+        <td><a href="?action=end&id={{row['donation_id']}}" class="btn btn-info">End</a></td>
+        {% else %}
+		<td>{{row['donation_status']}}</td>
+        {% endif %}
+        
+		<td><a href="?action=delete&id={{row['donation_id']}}" class="btn btn-info">DELETE</a></td>
+		<td><a href="?action=update&id={{row['donation_id']}}" class="btn btn-info">UPDATE</a></td>
+        <td><a href="admin_view_doners_list?id={{row['donation_id']}}" class="btn btn-info">View Doners</a></td>
+        
+	</tr>
+	{% endfor %}
+</table>
+</center>
+
+
+{% include 'footer.html' %}
+
