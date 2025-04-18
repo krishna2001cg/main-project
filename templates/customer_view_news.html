@@ -1,0 +1,240 @@
+{% include 'customerheader.html' %}
+  <style>
+    #hero {
+        background-image: url(/static/images/a41.jpg);
+        background-size: cover;
+        background-position: center;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        font-family: 'Arial', sans-serif;
+        box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
+      }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+  
+    
+    .newspaper {
+      max-width: 100%;
+      margin: 0 auto;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    
+    .header {
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 2px solid #000;
+      margin-bottom: 20px;
+    }
+    
+    .masthead {
+      font-size: 48px;
+      font-weight: bold;
+      font-family: "Old English Text MT", "Times New Roman", serif;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+    
+    .date-line {
+      font-style: italic;
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+    
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      padding: 8px 0;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    
+    .weather {
+      display: flex;
+      align-items: center;
+    }
+    
+    .temperature {
+      margin-left: 5px;
+      font-weight: bold;
+    }
+    
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
+    }
+    
+    .news-card {
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      background-color: #fff;
+      transition: transform 0.3s ease;
+    }
+    
+    .news-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .news-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .news-content {
+      padding: 15px;
+    }
+    
+    .news-date {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+    
+    .news-title {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    
+    .news-details {
+      font-size: 16px;
+      text-align: justify;
+      margin-bottom: 15px;
+    }
+    
+    .read-more {
+      display: inline-block;
+      padding: 8px 15px;
+      background-color: #000;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      border-radius: 3px;
+      transition: background-color 0.3s ease;
+    }
+    
+    .read-more:hover {
+      background-color: #333;
+    }
+    
+
+    
+    .hidden-table {
+      display: none;
+    }
+    
+    
+  </style>
+  <section id="hero"></section>
+  <div class="newspaper">
+    <header class="header">
+      <h1 class="masthead">The Kudumbashree Times</h1>
+      <div class="date-line">Thursday, February 27, 2025 | Kerala Edition | Vol. CXXVII No. 59</div>
+      <div class="top-bar">
+        <div>₹10.00</div>
+        <div class="weather">
+            Kerala : <span class="temperature">26°C</span>
+        </div>
+        <div>www.dailytimes.in</div>
+      </div>
+    </header>
+    
+    <!-- This is the original table structure (hidden) -->
+    <table class="hidden-table">
+      <tr>
+        <th>news_date</th>
+        <th>new_title</th>
+        <th>news_details</th>
+        <th>image</th>
+      </tr>
+      {% for i in data['view'] %}
+      <tr>
+        <td>{{i['news_date']}}</td>
+        <td>{{i['new_title']}}</td>
+        <td>{{i['news_details']}}</td>
+        <td><img src="/{{i['news_details']}}" alt=""></td>
+      </tr>
+      {% endfor %}
+    </table>
+    
+    <!-- This is the transformed news grid layout -->
+    <main class="news-grid">
+      {% for i in data['view'] %}
+      <article class="news-card">
+        <img src="/{{i['image']}}" alt="{{i['new_title']}}" class="news-image">
+        <div class="news-content">
+          <div class="news-date">{{i['news_date']}}</div>
+          <h2 class="news-title">{{i['new_title']}}</h2>
+          <p class="news-details">{{i['news_details']}}</p>
+          <a href="#" class="read-more">Read Full Story</a>
+        </div>
+      </article>
+      {% endfor %}
+      
+  
+      
+      <article class="news-card">
+        <img src="/api/placeholder/400/200" alt="Tech Giants Collaborate on AI Ethics Framework" class="news-image">
+        <div class="news-content">
+          <div class="news-date">February 26, 2025</div>
+          <h2 class="news-title">Tech Giants Collaborate on AI Ethics Framework</h2>
+          <p class="news-details">In an unprecedented move, five of the world's largest technology companies announced a joint initiative yesterday to develop a common ethical framework for artificial intelligence...</p>
+          <a href="#" class="read-more">Read Full Story</a>
+        </div>
+      </article>
+      
+      <article class="news-card">
+        <img src="/api/placeholder/400/200" alt="Cricket Team Announces Squad for Upcoming Series" class="news-image">
+        <div class="news-content">
+          <div class="news-date">February 25, 2025</div>
+          <h2 class="news-title">Cricket Team Announces Squad for Upcoming Series</h2>
+          <p class="news-details">The national cricket board has announced a 16-member squad for the upcoming three-match test series against Australia, starting next month...</p>
+          <a href="#" class="read-more">Read Full Story</a>
+        </div>
+      </article>
+      
+      <article class="news-card">
+        <img src="/api/placeholder/400/200" alt="Stock Market Reaches All-Time High" class="news-image">
+        <div class="news-content">
+          <div class="news-date">February 24, 2025</div>
+          <h2 class="news-title">Stock Market Reaches All-Time High</h2>
+          <p class="news-details">The benchmark index surged 2.3% today, reaching an all-time high of 75,432 points. The rally was led by banking, IT, and pharmaceutical stocks...</p>
+          <a href="#" class="read-more">Read Full Story</a>
+        </div>
+      </article>
+    </main>
+
+  </div>
+  {% include 'footer.html' %}
+
+
+  <script>
+    // JavaScript to update the date-line with the current date
+    function updateDate() {
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const currentDate = new Date().toLocaleDateString('en-IN', options);
+      const dateLine = document.getElementById('date-line');
+      dateLine.textContent = `${currentDate} | New Delhi Edition | Vol. CXXVII No. 59`;
+    }
+
+    // Call the function to update the date on page load
+    window.onload = updateDate;
+  </script>
